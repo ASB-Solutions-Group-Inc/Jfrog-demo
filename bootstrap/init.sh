@@ -28,4 +28,5 @@ sed -e "s/project-id-here/${PROJECT_ID}/" clouddeploy.yaml > clouddeploy.yaml
 # creates the Google Cloud Deploy pipeline
 gcloud deploy apply --file clouddeploy.yaml \
 --region=us-central1 --project=$PROJECT_ID
+echo "$PROJECT_ID"
 echo "init done. To create clusters, run: ./gke-cluster-init.sh"
