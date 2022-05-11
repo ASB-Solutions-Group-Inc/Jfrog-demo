@@ -1,9 +1,29 @@
 # Overview: build and create a release via Google Cloud Deploy for GKE
 # NOTE: currently requires SCM triggering due to dependency on the COMMIT_SHA variable
+substitutions:
+  _JFROG_SERVER_NAME: <servername>.jfrog.io
+  _JFROG_REPO_NAME: clouddays
+  _JFROG_CLI_VERSION: 2.11.0
+  _JFROG_USER: <user-name>
+  _PIPELINE_REGION: <us-west1>
+
 steps:
+ - name: 'gcr.io/cloud-builders/docker'
+   entrypoint: 'bash'
+   args: ['-c', 'docker login ${_JFROG_SERVER_NAME} -u ${_JFROG_USER} -p $$JFROG_ACCESS_TOKEN']
+   dir: 'app'
+   secretEnv: ['JFROG_ACCESS_TOKEN']
+  
+ - name: '${_JFROG_SERVER_NAME}/${_JFROG_REPO_NAME}/jfrog-cli:${_JFROG_CLI_VERSION}'
+   entrypoint: 'bash'
+   args: ['-c', 'jfrog config add ${_JFROG_REPO_NAME} --artifactory-url=https://${_JFROG_SERVER_NAME}/artifactory --interactive=false --access-token=$$JFROG_ACCESS_TOKEN']
+   env: ['TMPDIR=/app']
+   dir: 'app'
+   secretEnv: ['JFROG_ACCESS_TOKEN']
+  
   # Build and tag using commit sha
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '.', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/pop-stats/pop-stats:${COMMIT_SHA}', '-f', 'Dockerfile']
+    args: ['build','--tag=${_JFROG_SERVER_NAME}/${_JFROG_REPO_NAME}/npm-app:${COMMIT_SHA}', '.', '-f', 'Dockerfile']
     dir: 'app'
   # Run api tests
   - name: 'us-central1-docker.pkg.dev/$PROJECT_ID/pop-stats/pop-stats:${COMMIT_SHA}'
