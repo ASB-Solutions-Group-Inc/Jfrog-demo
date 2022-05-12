@@ -2,7 +2,7 @@
 # NOTE: currently requires SCM triggering due to dependency on the COMMIT_SHA variable
 substitutions:
   _JFROG_SERVER_NAME: <servername>.jfrog.io
-  _JFROG_REPO_NAME: clouddays
+  _JFROG_REPO_NAME: swampup
   _JFROG_CLI_VERSION: 2.11.0
   _JFROG_USER: <user-name>
   _PIPELINE_REGION: <us-west1>
@@ -23,7 +23,7 @@ steps:
   
   # Build and tag using commit sha
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build','--tag=${_JFROG_SERVER_NAME}/${_JFROG_REPO_NAME}/npm-app:${COMMIT_SHA}', '.', '-f', 'Dockerfile']
+    args: ['build','--tag=${_JFROG_SERVER_NAME}/${_JFROG_REPO_NAME}/pop-stats/pop-stats:${COMMIT_SHA}', '.', '-f', 'Dockerfile']
     dir: 'app'
   # Run api tests
   - name: 'us-central1-docker.pkg.dev/$PROJECT_ID/pop-stats/pop-stats:${COMMIT_SHA}'
@@ -33,17 +33,29 @@ steps:
   # Push the container image to Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/pop-stats/pop-stats:${COMMIT_SHA}']
+  
+# Docker Push the image to artifactiry
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', '${_JFROG_SERVER_NAME}/${_JFROG_REPO_NAME}/pop-stats/pop-stats:${COMMIT_SHA}']
+  dir: 'app'
+  secretEnv: ['JFROG_ACCESS_TOKEN']
+
   # Create release in Google Cloud Deploy
-  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
-    entrypoint: gcloud
-    args: 
+- name: gcr.io/google.com/cloudsdktool/cloud-sdk
+  entrypoint: gcloud
+  args:
       [
         "deploy", "releases", "create", "rel-${SHORT_SHA}",
-        "--delivery-pipeline", "pop-stats-pipeline",
-        "--region", "us-central1",
+        "--delivery-pipeline", "swampup-pipeline",
+        "--region", "${_PIPELINE_REGION}",
         "--annotations", "commitId=${REVISION_ID}",
-        "--images", "pop-stats=us-central1-docker.pkg.dev/$PROJECT_ID/pop-stats/pop-stats:${COMMIT_SHA}"
+        "--images", "pop-stats=${_JFROG_SERVER_NAME}/${_JFROG_REPO_NAME}/pop-stats:${COMMIT_SHA}",
+        "--source", "app"
       ]
+availableSecrets:
+  secretManager:
+  - versionName: projects/$PROJECT_ID/secrets/jfrog-access-token/versions/1
+    env: 'JFROG_ACCESS_TOKEN'
 images:
 - us-central1-docker.pkg.dev/$PROJECT_ID/pop-stats/pop-stats:${COMMIT_SHA}
 options:
