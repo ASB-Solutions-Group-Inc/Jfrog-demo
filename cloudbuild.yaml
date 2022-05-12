@@ -8,56 +8,56 @@ substitutions:
   _PIPELINE_REGION: <us-west1>
 
 steps:
- - name: 'gcr.io/cloud-builders/docker'
-   entrypoint: 'bash'
-   args: ['-c', 'docker login ${_JFROG_SERVER_NAME} -u ${_JFROG_USER} -p $$JFROG_ACCESS_TOKEN']
-   dir: 'app'
-   secretEnv: ['JFROG_ACCESS_TOKEN']
-  
- - name: '${_JFROG_SERVER_NAME}/${_JFROG_REPO_NAME}/jfrog-cli:${_JFROG_CLI_VERSION}'
-   entrypoint: 'bash'
-   args: ['-c', 'jfrog config add ${_JFROG_REPO_NAME} --artifactory-url=https://${_JFROG_SERVER_NAME}/artifactory --interactive=false --access-token=$$JFROG_ACCESS_TOKEN']
-   env: ['TMPDIR=/app']
-   dir: 'app'
-   secretEnv: ['JFROG_ACCESS_TOKEN']
-  
+  - name: 'gcr.io/cloud-builders/docker'
+    entrypoint: 'bash'
+    args: [ '-c', 'docker login ${_JFROG_SERVER_NAME} -u ${_JFROG_USER} -p $$JFROG_ACCESS_TOKEN' ]
+    dir: 'app'
+    secretEnv: [ 'JFROG_ACCESS_TOKEN' ]
+
+  - name: '${_JFROG_SERVER_NAME}/${_JFROG_REPO_NAME}/jfrog-cli:${_JFROG_CLI_VERSION}'
+    entrypoint: 'bash'
+    args: [ '-c', 'jfrog config add ${_JFROG_REPO_NAME} --artifactory-url=https://${_JFROG_SERVER_NAME}/artifactory --interactive=false --access-token=$$JFROG_ACCESS_TOKEN' ]
+    env: [ 'TMPDIR=/app' ]
+    dir: 'app'
+    secretEnv: [ 'JFROG_ACCESS_TOKEN' ]
+
   # Build and tag using commit sha
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build','--tag=${_JFROG_SERVER_NAME}/${_JFROG_REPO_NAME}/pop-stats/pop-stats:${COMMIT_SHA}', '.', '-f', 'Dockerfile']
+    args: [ 'build','--tag=${_JFROG_SERVER_NAME}/${_JFROG_REPO_NAME}/pop-stats/pop-stats:${COMMIT_SHA}', '.', '-f', 'Dockerfile' ]
     dir: 'app'
   # Run api tests
   - name: 'us-central1-docker.pkg.dev/$PROJECT_ID/pop-stats/pop-stats:${COMMIT_SHA}'
     entrypoint: python
-    args: ["api_tests.py"]
+    args: [ "api_tests.py" ]
     dir: 'app'
   # Push the container image to Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/pop-stats/pop-stats:${COMMIT_SHA}']
-  
-# Docker Push the image to artifactiry
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['push', '${_JFROG_SERVER_NAME}/${_JFROG_REPO_NAME}/pop-stats/pop-stats:${COMMIT_SHA}']
-  dir: 'app'
-  secretEnv: ['JFROG_ACCESS_TOKEN']
+    args: [ 'push', 'us-central1-docker.pkg.dev/$PROJECT_ID/pop-stats/pop-stats:${COMMIT_SHA}' ]
 
-  # Create release in Google Cloud Deploy
-- name: gcr.io/google.com/cloudsdktool/cloud-sdk
-  entrypoint: gcloud
-  args:
+  # Docker Push the image to artifactiry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [ 'push', '${_JFROG_SERVER_NAME}/${_JFROG_REPO_NAME}/pop-stats/pop-stats:${COMMIT_SHA}' ]
+    dir: 'app'
+    secretEnv: [ 'JFROG_ACCESS_TOKEN' ]
+
+    # Create release in Google Cloud Deploy
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    entrypoint: gcloud
+    args:
       [
-        "deploy", "releases", "create", "rel-${SHORT_SHA}",
-        "--delivery-pipeline", "swampup-pipeline",
-        "--region", "${_PIPELINE_REGION}",
-        "--annotations", "commitId=${REVISION_ID}",
-        "--images", "pop-stats=${_JFROG_SERVER_NAME}/${_JFROG_REPO_NAME}/pop-stats:${COMMIT_SHA}",
-        "--source", "app"
+          "deploy", "releases", "create", "rel-${SHORT_SHA}",
+          "--delivery-pipeline", "swampup-pipeline",
+          "--region", "${_PIPELINE_REGION}",
+          "--annotations", "commitId=${REVISION_ID}",
+          "--images", "pop-stats=${_JFROG_SERVER_NAME}/${_JFROG_REPO_NAME}/pop-stats:${COMMIT_SHA}",
+          "--source", "app"
       ]
 availableSecrets:
   secretManager:
-  - versionName: projects/$PROJECT_ID/secrets/jfrog-access-token/versions/1
-    env: 'JFROG_ACCESS_TOKEN'
-images:
-- us-central1-docker.pkg.dev/$PROJECT_ID/pop-stats/pop-stats:${COMMIT_SHA}
-options:
-  requestedVerifyOption: VERIFIED
+    - versionName: projects/$PROJECT_ID/secrets/jfrog-access-token/versions/1
+      env: 'JFROG_ACCESS_TOKEN'
+      #images:
+      #- us-central1-docker.pkg.dev/$PROJECT_ID/pop-stats/pop-stats:${COMMIT_SHA}
+      #options:
+      #  requestedVerifyOption: VERIFIED
     
