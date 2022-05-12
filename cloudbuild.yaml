@@ -1,11 +1,11 @@
 # Overview: build and create a release via Google Cloud Deploy for GKE
 # NOTE: currently requires SCM triggering due to dependency on the COMMIT_SHA variable
 substitutions:
-  _JFROG_SERVER_NAME: <servername>.jfrog.io
+  _JFROG_SERVER_NAME: abambah.jfrog.io
   _JFROG_REPO_NAME: swampup
   _JFROG_CLI_VERSION: 2.11.0
-  _JFROG_USER: <user-name>
-  _PIPELINE_REGION: <us-west1>
+  _JFROG_USER: abambah+swampup@google.com
+  _PIPELINE_REGION: us-central-1
 
 steps:
   - name: 'gcr.io/cloud-builders/docker'
