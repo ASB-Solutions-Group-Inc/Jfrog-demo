@@ -5,7 +5,7 @@ substitutions:
   _JFROG_REPO_NAME: swampup
   _JFROG_CLI_VERSION: 2.11.0
   _JFROG_USER: abambah+swampup@google.com
-  _PIPELINE_REGION: us-central-1
+  _PIPELINE_REGION: us-central1
 
 steps:
   - name: 'gcr.io/cloud-builders/docker'
