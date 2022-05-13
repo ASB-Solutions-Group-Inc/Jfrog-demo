@@ -46,7 +46,7 @@ steps:
     args:
       [
           "deploy", "releases", "create", "rel-${SHORT_SHA}",
-          "--delivery-pipeline", "swampup-pipeline",
+          "--delivery-pipeline", "pop-stats-pipeline",
           "--region", "${_PIPELINE_REGION}",
           "--annotations", "commitId=${REVISION_ID}",
           "--images", "pop-stats=${_JFROG_SERVER_NAME}/${_JFROG_REPO_NAME}/pop-stats:${COMMIT_SHA}"
