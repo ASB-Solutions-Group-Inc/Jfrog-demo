@@ -3,7 +3,7 @@
 #
 
 substitutions:
-  _JFROG_SERVER_NAME: abambah.jfrog.io
+  _JFROG_SERVER_NAME: swampup.jfrog.io
   _JFROG_REPO_NAME: swampup
   _JFROG_CLI_VERSION: 2.11.0
   _JFROG_USER: abambah+swampup@google.com

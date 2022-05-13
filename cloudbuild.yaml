@@ -1,10 +1,10 @@
 # Overview: build and create a release via Google Cloud Deploy for GKE
 # NOTE: currently requires SCM triggering due to dependency on the COMMIT_SHA variable
 substitutions:
-  _JFROG_SERVER_NAME: abambah.jfrog.io
+  _JFROG_SERVER_NAME: swampup.jfrog.io
   _JFROG_REPO_NAME: swampup
   _JFROG_CLI_VERSION: 2.11.0
-  _JFROG_USER: abambah+swampup@google.com
+  _JFROG_USER: abambah@google.com
   _PIPELINE_REGION: us-central1
 
 steps:
@@ -54,7 +54,7 @@ steps:
       ]
 availableSecrets:
   secretManager:
-    - versionName: projects/$PROJECT_ID/secrets/jfrog-access-token/versions/1
+    - versionName: projects/$PROJECT_ID/secrets/jfrog-access-token/versions/2
       env: 'JFROG_ACCESS_TOKEN'
       #images:
       #- us-central1-docker.pkg.dev/$PROJECT_ID/pop-stats/pop-stats:${COMMIT_SHA}
