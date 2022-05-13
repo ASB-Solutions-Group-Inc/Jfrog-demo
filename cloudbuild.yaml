@@ -2,7 +2,7 @@
 # NOTE: currently requires SCM triggering due to dependency on the COMMIT_SHA variable
 substitutions:
   _JFROG_SERVER_NAME: swampup.jfrog.io
-  _JFROG_REPO_NAME: swampup
+  _JFROG_REPO_NAME: swampup-docker
   _JFROG_CLI_VERSION: 2.11.0
   _JFROG_USER: abambah@google.com
   _PIPELINE_REGION: us-central1
