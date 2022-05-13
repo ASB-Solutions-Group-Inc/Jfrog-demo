@@ -14,6 +14,7 @@ substitutions:
 steps:
 # Build the Cloud Builder Image that includes JFrog CLI
 - name: 'gcr.io/cloud-builders/docker'
+  dir: 'jfrog-cli-docker'
   args:
   - 'build'
   - '--build-arg=BASE_IMAGE=gcr.io/cloud-builders/npm:node-14.10.1'
@@ -24,12 +25,14 @@ steps:
 
 # Tag a default builder version.
 - name: 'gcr.io/cloud-builders/docker'
+  dir: 'jfrog-cli-docker'
   args:
   - 'tag'
   - '${_JFROG_SERVER_NAME}/${_JFROG_REPO_NAME}/jfrog-cli:${_JFROG_CLI_VERSION}'
   - '${_JFROG_SERVER_NAME}/${_JFROG_REPO_NAME}/jfrog-cli'
 
 - name: 'gcr.io/cloud-builders/docker'
+  dir: 'jfrog-cli-docker'
   args:
   - 'login'
   - '${_JFROG_SERVER_NAME}/${_JFROG_REPO_NAME}/java-app'
