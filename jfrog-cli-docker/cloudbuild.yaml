@@ -3,11 +3,13 @@
 #
 
 substitutions:
-  _JFROG_SERVER_NAME: <servername>.jfrog.io
-  _JFROG_USER: <name>@<yourcompany>.com
-  _JFROG_API_KEY: <api key>
-  _JFROG_REPO_NAME: clouddays
+  _JFROG_SERVER_NAME: abambah.jfrog.io
+  _JFROG_REPO_NAME: swampup
   _JFROG_CLI_VERSION: 2.11.0
+  _JFROG_USER: abambah+swampup@google.com
+  _PIPELINE_REGION: us-central1
+  _JFROG_API_KEY: <api key>
+
   
 steps:
 # Build the Cloud Builder Image that includes JFrog CLI

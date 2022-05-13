@@ -3,7 +3,7 @@ FROM ${BASE_IMAGE}
 
 #ARG JFROG_CLI_VERSION=1.17.1
 ARG JFROG_CLI_VERSION=v2
-#ARG USER_HOME_DIR="/root"
+ARG USER_HOME_DIR="/app"
 
 # PR submitted to download versioned JFrog CLI
 RUN echo "deb [check-valid-until=no] http://archive.debian.org/debian jessie-backports main" > /etc/apt/sources.list.d/jessie-backports.list
