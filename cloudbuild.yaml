@@ -49,8 +49,7 @@ steps:
           "--delivery-pipeline", "swampup-pipeline",
           "--region", "${_PIPELINE_REGION}",
           "--annotations", "commitId=${REVISION_ID}",
-          "--images", "pop-stats=${_JFROG_SERVER_NAME}/${_JFROG_REPO_NAME}/pop-stats:${COMMIT_SHA}",
-          "--source", "app"
+          "--images", "pop-stats=${_JFROG_SERVER_NAME}/${_JFROG_REPO_NAME}/pop-stats:${COMMIT_SHA}"
       ]
 availableSecrets:
   secretManager:
