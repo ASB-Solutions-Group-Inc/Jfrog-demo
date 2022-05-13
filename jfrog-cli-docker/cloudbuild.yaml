@@ -14,7 +14,7 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args:
   - 'build'
-  - '--build-arg=BASE_IMAGE=gcr.io/cloud-builders/npm:node-14.10.0'
+  - '--build-arg=BASE_IMAGE=gcr.io/cloud-builders/npm:node-14.10.1'
   - '--tag=gcr.io/$PROJECT_ID/npm/${_JFROG_CLI_VERSION}'
   - '--tag=${_JFROG_SERVER_NAME}/${_JFROG_REPO_NAME}/jfrog-cli:${_JFROG_CLI_VERSION}'
   - '.'
