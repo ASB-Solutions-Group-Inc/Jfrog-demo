@@ -43,4 +43,4 @@ spec:
               fieldRef:
                 fieldPath: metadata.name
       imagePullSecrets:
-        - name: regcred-new
+        - name: regcred
