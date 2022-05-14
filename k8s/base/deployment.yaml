@@ -23,6 +23,7 @@ spec:
       containers:
       - image: pop-stats
         name: pop-stats
+        imagePullPolicy: Always
         readinessProbe:
           periodSeconds: 1
           httpGet:
