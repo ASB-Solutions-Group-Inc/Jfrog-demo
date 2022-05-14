@@ -32,6 +32,7 @@ steps:
 #    dir: 'app'
 #    secretEnv: [ 'JFROG_ACCESS_TOKEN' ]
 
+
   # Docker Push the image to artifactiry
   - name: 'gcr.io/cloud-builders/docker'
     args: [ 'push', '${_JFROG_SERVER_NAME}/${_JFROG_REPO_NAME}/pop-stats/pop-stats:${COMMIT_SHA}' ]
