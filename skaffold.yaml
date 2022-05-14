@@ -6,11 +6,13 @@ build:
 # Uncomment if you're using minikube for local dev and don't want to push to Artifact Registry
 #  local: 
 #    push: false
-#  artifacts:
-#  - image: pop-stats
-#    context: app
-#    docker:
-#      dockerfile: Dockerfile
+  artifacts:
+    - image: swampup.jfrog.io/swampup-docker-local/pop-stats/pop-stats:latest
+      context: app
+      docker:
+        dockerfile: Dockerfile
+  cluster:
+      pullSecretName: regcred
 deploy:
   kustomize:
     paths: 
