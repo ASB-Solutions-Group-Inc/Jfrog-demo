@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: pop-stats-test
+  name: pop-stats
   labels:
     app: pop-stats
 spec:
@@ -21,7 +21,7 @@ spec:
         app: pop-stats
     spec:
       containers:
-      - image: swampup.jfrog.io/swampup-docker/pop-stats/pop-stats:latest
+      - image: pop-stats
         name: pop-stats
         imagePullPolicy: Always
         readinessProbe:
