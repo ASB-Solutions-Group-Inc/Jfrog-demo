@@ -26,12 +26,13 @@ steps:
     args: [ 'build','--tag=${_JFROG_SERVER_NAME}/${_JFROG_REPO_NAME}/pop-stats/pop-stats:${COMMIT_SHA}', '.', '-f', 'Dockerfile' ]
     dir: 'app'
   # Run api tests
-#  - name: '${_JFROG_SERVER_NAME}/${_JFROG_REPO_NAME}/pop-stats/pop-stats:${COMMIT_SHA}'
+#  - name: 'us-central1-docker.pkg.dev/$PROJECT_ID/pop-stats/pop-stats:${COMMIT_SHA}'
 #    entrypoint: python
 #    args: [ "api_tests.py" ]
 #    dir: 'app'
-#    secretEnv: [ 'JFROG_ACCESS_TOKEN' ]
-
+  # Push the container image to Artifact Registry
+#  - name: 'gcr.io/cloud-builders/docker'
+#    args: [ 'push', 'us-central1-docker.pkg.dev/$PROJECT_ID/pop-stats/pop-stats:${COMMIT_SHA}' ]
 
   # Docker Push the image to artifactiry
   - name: 'gcr.io/cloud-builders/docker'
