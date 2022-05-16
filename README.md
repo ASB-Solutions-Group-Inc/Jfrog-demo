@@ -6,7 +6,7 @@ This repo demostrates CI/CD for GKE with Google Cloud tools Google Cloud Deploy,
 ## Fork this repo
 This demo relies on you making git check-ins to simulate a developer workflow. So you'll need your own copy of these files in your own Github.com repo.
 
-[Fork this repo on Github](https://github.com/vszal/pop-kustomize/fork)
+[Fork this repo on Github](https://github.com/avnit/Jfrog-demo/fork)
 
 If you've already done that, you can start the setup tutorial below.
 
