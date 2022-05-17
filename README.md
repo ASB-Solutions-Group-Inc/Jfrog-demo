@@ -1,4 +1,4 @@
-# Demo: Google Cloud CI/CD for GKE
+# Demo: Jfrog Swampup Google Cloud CI/CD for GKE using Jfrog Artifactory and Xray.
 This repo demostrates CI/CD for GKE with Google Cloud tools Google Cloud Deploy, Cloud Build, Jfrog Artifact Registry and Jfrog Xray. The example app is based on a simple Python Flask example app named "Population Stats" and uses Kustomize overlays to enable configuration differences across three different environments: test, staging, and prod. 
 
 [![Demo flow](https://github.com/avnit/Jfrog-demo/blob/main/Untitled-2022-05-16-1206.png)](https://github.com/avnit/Jfrog-demo/blob/main/Untitled-2022-05-16-1206.png)
