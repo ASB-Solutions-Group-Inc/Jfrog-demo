@@ -3,7 +3,7 @@
 #
 
 substitutions:
-  _JFROG_SERVER_NAME: swampup.jfrog.io
+  _JFROG_SERVER_NAME: swampup-google-rt.jfrog.tech
   _JFROG_REPO_NAME: swampup-docker
   _JFROG_CLI_VERSION: 2.11.0
   _JFROG_USER: abambah@google.com
@@ -53,5 +53,5 @@ steps:
 
 availableSecrets:
     secretManager:
-    - versionName: projects/$PROJECT_ID/secrets/jfrog-access-token/versions/2
+    - versionName: projects/$PROJECT_ID/secrets/jfrog-access-token/versions/3
       env: 'JFROG_ACCESS_TOKEN'
