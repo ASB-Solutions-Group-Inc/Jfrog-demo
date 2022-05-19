@@ -3,13 +3,11 @@
 #
 
 substitutions:
-  _JFROG_SERVER_NAME: swampup-google-rt.jfrog.tech
+  _JFROG_SERVER_NAME: swampupdemo.jfrog.io
   _JFROG_REPO_NAME: swampup-docker
   _JFROG_CLI_VERSION: 2.11.0
-  _JFROG_USER: abambah@google.com
+  _JFROG_USER: abambah
   _PIPELINE_REGION: us-central1
-  _JFROG_API_KEY: <api key>
-
 
 steps:
   # Build the Cloud Builder Image that includes JFrog CLI
@@ -44,14 +42,7 @@ steps:
     dir: 'jfrog-cli-docker'
     secretEnv: [ 'JFROG_ACCESS_TOKEN' ]
 
-
-
-      #images:
-      #- '${_JFROG_SERVER_NAME}/${_JFROG_REPO_NAME}/jfrog-cli:${_JFROG_CLI_VERSION}'
-      #- '${_JFROG_SERVER_NAME}/${_JFROG_REPO_NAME}/jfrog-cli'
-      #tags: ['cloud-builders-community']
-
 availableSecrets:
     secretManager:
-    - versionName: projects/$PROJECT_ID/secrets/jfrog-access-token/versions/3
+    - versionName: projects/$PROJECT_ID/secrets/jfrog-access-token/versions/4
       env: 'JFROG_ACCESS_TOKEN'
